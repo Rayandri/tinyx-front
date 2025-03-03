@@ -3,7 +3,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 ---
 
 ### **📌 README.md - tinyx-front (Frontend - Next.js)**  
-```md
+
 # TinyX Frontend
 
 TinyX is a micro-blogging platform built with a microservices architecture. This repository contains the frontend application developed using **Next.js**.
