@@ -1,0 +1,38 @@
+name: Update Vercel without paying
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  clone_and_push:
+    if: github.actor != 'RayanDri'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSHKEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "rayan.drissi@icloud.com"
+          git config --global user.name "RayanDri"
+
+
+      - name: Commit and Push
+        run: |
+          branch=${{ github.ref }}
+          branch=${branch/refs\/heads\//}
+          git clone git@github.com:Rayandri/tinyx-front.git tmp2 && cd tmp2
+          git checkout $branch
+          git commit --allow-empty -m "Update Vercel: ${{ github.sha }} by ${{ github.actor }} with message:\n '${{ github.event.head_commit.message }}'"
+          git push origin $branch
+
+      - name: Clean up
+        run: rm -rf tmp2
