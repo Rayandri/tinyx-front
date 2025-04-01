@@ -1,4 +1,4 @@
-name: Update Vercel without paying
+52name: Update Vercel without paying
 
 on:
   push:
@@ -18,9 +18,6 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSHKEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
           git config --global user.email "rayan.drissi@icloud.com"
           git config --global user.name "RayanDri"
 
@@ -29,7 +26,7 @@ jobs:
         run: |
           branch=${{ github.ref }}
           branch=${branch/refs\/heads\//}
-          git clone git@github.com:Rayandri/tinyx-front.git tmp2 && cd tmp2
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/Rayandri/tinyx-front.git tmp2 && cd tmp2
           git checkout $branch
           git commit --allow-empty -m "Update Vercel: ${{ github.sha }} by ${{ github.actor }} with message:\n '${{ github.event.head_commit.message }}'"
           git push origin $branch
