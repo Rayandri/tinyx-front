@@ -319,7 +319,7 @@ export default function DashboardPage() {
               Signets
             </Link>
             <Link
-              href="#"
+              href="profil"
               className="flex items-center px-4 py-2 text-lg font-medium text-gray-700 rounded-full hover:bg-gray-100"
             >
               <svg
